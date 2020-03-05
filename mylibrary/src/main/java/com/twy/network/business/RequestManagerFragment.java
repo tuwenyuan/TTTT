@@ -23,8 +23,10 @@ public class RequestManagerFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        startRequestData.unsubscribe();
-        iUnsubscribe.unsubscribe();
+        if(startRequestData!=null)
+            startRequestData.unsubscribe();
+        if(iUnsubscribe!=null)
+            iUnsubscribe.unsubscribe();
     }
 
     public void startRequestData(Observable observable, OnRecvDataListener dataListener, Net.IUnsubscribe iUnsubscribe){
