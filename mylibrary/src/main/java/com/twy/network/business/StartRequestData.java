@@ -2,12 +2,14 @@ package com.twy.network.business;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.twy.network.interfaces.Body;
 import com.twy.network.interfaces.DataListener;
 import com.twy.network.interfaces.FileType;
 import com.twy.network.interfaces.OnRecvDataListener;
 import com.twy.network.interfaces.Query;
+import com.twy.network.interfaces.REST;
 import com.twy.network.model.ErrorCode;
 import com.twy.network.model.HttpMethod;
 import com.twy.network.model.RequestInfo;
@@ -144,6 +146,7 @@ public class StartRequestData {
             if(observable.paramValues!=null){
                 Map<String,String> params = new HashMap<>();
                 String bodyStr = null;
+                StringBuilder restStrB = new StringBuilder();
                 for(int i = 0;i<observable.paramValues.length;i++){
                     if(observable.paramNames.get(i) instanceof Query && observable.paramValues[i]!=null){
                         String value = observable.paramValues[i].toString();
@@ -164,10 +167,15 @@ public class StartRequestData {
                         }else {
                             throw new Exception(ErrorCode.BodyInPostRequest.getCode()+":"+ErrorCode.BodyInPostRequest.getName());
                         }
+                    }else if(observable.paramNames.get(i) instanceof  REST){
+                        restStrB.append("/"+observable.paramValues[i].toString());
                     }
                 }
                 requestInfo.setParams(params);
                 requestInfo.setBodyString(bodyStr);
+                if(!TextUtils.isEmpty(restStrB)){
+                    requestInfo.setUrl(path+restStrB.toString());
+                }
             }
             if(observable.headers!=null){
                 Map<String,String> hds = new HashMap<>();

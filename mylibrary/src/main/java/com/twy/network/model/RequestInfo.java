@@ -16,6 +16,15 @@ public class RequestInfo {
     private boolean isMultipart;//是否上传文件标识
     private File file;
     private String bodyString;
+    private String restString; // 服务器地址/参数1/参数2
+
+    public String getRestString() {
+        return restString;
+    }
+
+    public void setRestString(String restString) {
+        this.restString = restString;
+    }
 
     public String getBodyString() {
         return bodyString;
