@@ -169,6 +169,7 @@ public class StartRequestData {
                         }
                     }else if(observable.paramNames.get(i) instanceof  REST){
                         restStrB.append("/"+observable.paramValues[i].toString());
+
                     }
                 }
                 requestInfo.setParams(params);
